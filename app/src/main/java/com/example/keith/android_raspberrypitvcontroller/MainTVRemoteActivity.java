@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainTVRemoteActivity extends AppCompatActivity {
 
@@ -21,7 +22,20 @@ public class MainTVRemoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tvremote);
+        setUpUI();
 
+        //check tv on off state
+        checkTVOnOffState();
+
+        //set the switch to ON
+        tvOnOffSwitch.setChecked(true);
+
+        //volume and channel controls
+        volumeControls();
+        channelControls();
+    }
+
+    public void setUpUI(){
         //find interactive components on screen
         switchStatus = (TextView) findViewById(R.id.switchStatus);
         tvOnOffSwitch = (Switch) findViewById(R.id.tvOnOffSwitch);
@@ -30,47 +44,51 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         channelUpButton = (Button) findViewById(R.id.channelUpButton);
         channelDownButton = (Button) findViewById(R.id.channelDownButton);
 
-        //set the switch to ON
-        tvOnOffSwitch.setChecked(true);
+    }
 
+    public void checkTVOnOffState(){
         //attach a listener to check for changes in state
         tvOnOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-
                 if (isChecked) {
-                    switchStatus.setText("Switch is currently DOING");
+                    switchStatus.setText("Switch is currently ON");
                 } else {
                     switchStatus.setText("Switch is currently OFF");
                 }
             }
         });
 
+    }
+
+    public void volumeControls(){
+        //volume up listener
         View.OnClickListener oclVolumeUpBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                switchStatus.setText("Volume Up");
-
+                Toast.makeText(MainTVRemoteActivity.this, "Volume Up",100).show();
             }
         };
-
+        //volume down
         View.OnClickListener oclVolumeDownBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                switchStatus.setText("Volume Down");
-
+                Toast.makeText(MainTVRemoteActivity.this, "Volume Down",100).show();
             }
         };
+        // assign click listener to buttons
+        volumeUpButton.setOnClickListener(oclVolumeUpBtn);
+        volumeDownButton.setOnClickListener(oclVolumeDownBtn);
+    }
 
+
+    public void channelControls(){
         View.OnClickListener oclChannelUpBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                switchStatus.setText("Channel Up");
+                Toast.makeText(MainTVRemoteActivity.this, "Channel Up",100).show();
 
             }
         };
@@ -78,28 +96,15 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         View.OnClickListener oclChannelDownBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                switchStatus.setText("Channel Down");
-
+                Toast.makeText(MainTVRemoteActivity.this, "Channel Down",100).show();
             }
         };
-
-
-
-        //check the current state before we display the screen
-        if(tvOnOffSwitch.isChecked()){
-            switchStatus.setText("Switch is currently ON");
-        }
-        else {
-            switchStatus.setText("Switch is currently OFF");
-        }
-
         // assign click listener to the OK button (btnOK)
-        volumeUpButton.setOnClickListener(oclVolumeUpBtn);
-        volumeDownButton.setOnClickListener(oclVolumeDownBtn);
         channelUpButton.setOnClickListener(oclChannelUpBtn);
         channelDownButton.setOnClickListener(oclChannelDownBtn);
 
     }
+
+
 }
 
