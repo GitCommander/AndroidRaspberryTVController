@@ -1,5 +1,8 @@
 package com.example.keith.android_raspberrypitvcontroller;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
     private Button volumeDownButton;
     private Button channelUpButton;
     private Button channelDownButton;
+    private BluetoothAdapter bluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
 
         //check tv on off state
         checkTVOnOffState();
+        checkBluetoothState();
 
         //set the switch to ON
         tvOnOffSwitch.setChecked(true);
@@ -33,6 +38,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         //volume and channel controls
         volumeControls();
         channelControls();
+
     }
 
     public void setUpUI(){
@@ -102,6 +108,28 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         // assign click listener to the OK button (btnOK)
         channelUpButton.setOnClickListener(oclChannelUpBtn);
         channelDownButton.setOnClickListener(oclChannelDownBtn);
+
+    }
+
+    public void checkBluetoothState(){
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(bluetoothAdapter.isEnabled()){
+            Toast.makeText(MainTVRemoteActivity.this, "Bluetooth is on",Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(MainTVRemoteActivity.this, "Bluetooth is off",Toast.LENGTH_LONG).show();
+            turnOnBluetooth();
+        }
+
+    }
+
+    public void turnOnBluetooth(){
+        String bluetoothStateChanged = BluetoothAdapter.ACTION_STATE_CHANGED;
+        String bluetoothRequestEnable = BluetoothAdapter.ACTION_REQUEST_ENABLE;
+        IntentFilter filter = new IntentFilter(bluetoothStateChanged);
+        startActivityForResult(new Intent(bluetoothRequestEnable), 0);
+
 
     }
 
