@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Android-Raspberry Pi TV Controller</string>
+    <string name="switch_text">TV On/Off</string>
+    <string name="pair_pi">Bluetooth</string>
+    <string name="channelLabel">Channel</string>
+    <string name="volumeLabel">Volume</string>
+    <string name="volumeUpBtn">Volume +</string>
+    <string name="volumeDownBtn">Volume -</string>
+    <string name="channelUpBtn">Channel +</string>
+    <string name="channelDownBtn">Channel -</string>
+    <string name="bluetoothActivityTitle">Bluetooth</string>
 </resources>

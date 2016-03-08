@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -47,6 +50,23 @@ public class MainTVRemoteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.overflow, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Toast.makeText(MainTVRemoteActivity.this, "Option selected", 10).show();
+        if(item.getItemId() == R.id.bluetooth) {
+            Intent bluetoothIntent = new Intent(MainTVRemoteActivity.this, BluetoothActivity.class);
+            startActivity(bluetoothIntent);
+        }
+        return true;
+    }
+
     public void setUpUI() {
         //find interactive components on screen
         switchStatus = (TextView) findViewById(R.id.switchStatus);
@@ -81,14 +101,14 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         View.OnClickListener oclVolumeUpBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainTVRemoteActivity.this, "Volume Up", 100).show();
+                Toast.makeText(MainTVRemoteActivity.this, "Volume Up", 10).show();
             }
         };
         //volume down
         View.OnClickListener oclVolumeDownBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainTVRemoteActivity.this, "Volume Down", 100).show();
+                Toast.makeText(MainTVRemoteActivity.this, "Volume Down", 10).show();
             }
         };
         // assign click listener to buttons
@@ -101,7 +121,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         View.OnClickListener oclChannelUpBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainTVRemoteActivity.this, "Channel Up", 100).show();
+                Toast.makeText(MainTVRemoteActivity.this, "Channel Up", 10).show();
 
             }
         };
@@ -109,7 +129,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         View.OnClickListener oclChannelDownBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainTVRemoteActivity.this, "Channel Down", 100).show();
+                Toast.makeText(MainTVRemoteActivity.this, "Channel Down", 10).show();
             }
         };
         // assign click listener to the OK button (btnOK)
@@ -147,7 +167,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(MainTVRemoteActivity.this, "Scan for ",100).show();
                 if (checkBluetoothState() == true) {
-                    Toast.makeText(MainTVRemoteActivity.this, "Scanning...", 100).show();
+                    Toast.makeText(MainTVRemoteActivity.this, "Scanning...", 10).show();
                     scanBluetooth();
                 }
 
