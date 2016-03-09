@@ -10,13 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainTVRemoteActivity">
+        <activity
+            android:name=".MainTVRemoteActivity"
+            android:label="TV Controller">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BluetoothActivity" ></activity>
+        <activity android:name=".BluetoothActivity"
+            android:label="Bluetooth Settings"
+            android:parentActivityName=".MainTVRemoteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainTVRemoteActivity" />
+        </activity>
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

@@ -3,13 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bluetoothSwitch"
+        android:layout_marginTop="21dp"
+        android:checked="false"
+        android:textSize="20dp"
+        android:textAlignment="viewStart"
+        android:text="@string/bluetooth_on"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/bluetoothActivityTitle"
-        android:password="false"
-        android:layout_marginTop="83dp"
+        android:text="@string/bluetooth_on"
+        android:id="@+id/scanBluetoothBtn"
+        android:textSize="20dp"
+        android:layout_marginTop="127dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

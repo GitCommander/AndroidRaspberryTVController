@@ -108,15 +108,6 @@
         android:layout_alignLeft="@+id/channelUpButton"
         android:layout_alignStart="@+id/channelUpButton" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pair_pi"
-        android:id="@+id/scanBluetoothBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="59dp"
-        android:textSize="20dp" />
 
 </RelativeLayout>
 
