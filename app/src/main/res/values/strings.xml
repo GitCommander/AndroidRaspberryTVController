@@ -1,13 +1,17 @@
 <resources>
     <string name="app_name">Android-Raspberry Pi TV Controller</string>
+    <!--Main TV Remote activity -->
     <string name="switch_text">TV On/Off</string>
-    <string name="bluetooth_on">Turn On/Off</string>
     <string name="channelLabel">Channel</string>
     <string name="volumeLabel">Volume</string>
     <string name="volumeUpBtn">Volume +</string>
     <string name="volumeDownBtn">Volume -</string>
     <string name="channelUpBtn">Channel +</string>
     <string name="channelDownBtn">Channel -</string>
+
+    <!--bluetooth activity strings-->
     <string name="bluetoothActivityTitle">Bluetooth</string>
     <string name="bluetooth_settings">Bluetooth Settings</string>
+    <string name="bluetooth_on">Turn On/Off</string>
+    <string name="scanButtonText">Scan</string>
 </resources>
