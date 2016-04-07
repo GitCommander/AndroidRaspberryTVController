@@ -51,9 +51,13 @@ public class MainTVRemoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.bluetooth) {
+        if(item.getItemId() == R.id.bluetoothLayout) {
             Intent bluetoothIntent = new Intent(MainTVRemoteActivity.this, BluetoothActivity.class);
             startActivity(bluetoothIntent);
+        }
+        if(item.getItemId() == R.id.voiceDictationLayout) {
+            Intent voiceIntent = new Intent(MainTVRemoteActivity.this, VoiceDictationActivity.class);
+            startActivity(voiceIntent);
         }
         return true;
     }
