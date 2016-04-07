@@ -21,6 +21,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
     private Button volumeDownButton;
     private Button channelUpButton;
     private Button channelDownButton;
+    private Button tvSourceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         //volume and channel controls
         volumeControls();
         channelControls();
+        sourceControl();
 
     }
 
@@ -64,6 +66,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         volumeDownButton = (Button) findViewById(R.id.volumeDownButton);
         channelUpButton = (Button) findViewById(R.id.channelUpButton);
         channelDownButton = (Button) findViewById(R.id.channelDownButton);
+        tvSourceButton = (Button) findViewById(R.id.tvSourceButton);
 
     }
 
@@ -75,9 +78,9 @@ public class MainTVRemoteActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    switchStatus.setText("Switch is currently ON");
+                    switchStatus.setText("TV is currently ON");
                 } else {
-                    switchStatus.setText("Switch is currently OFF");
+                    switchStatus.setText("TV is currently OFF");
                 }
             }
         });
@@ -125,6 +128,20 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         channelDownButton.setOnClickListener(oclChannelDownBtn);
 
     }
+
+    public void sourceControl() {
+        //volume up listener
+        View.OnClickListener oclSourceBtn = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainTVRemoteActivity.this, "Source change", 10).show();
+            }
+        };
+
+        // assign click listener to buttons
+        tvSourceButton.setOnClickListener(oclSourceBtn);
+    }
+
 
 }
 

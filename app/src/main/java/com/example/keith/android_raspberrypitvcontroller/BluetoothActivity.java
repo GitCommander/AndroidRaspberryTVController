@@ -3,10 +3,12 @@ package com.example.keith.android_raspberrypitvcontroller;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +19,13 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.Set;
+
 
 public class BluetoothActivity extends AppCompatActivity {
 
     private BluetoothAdapter bluetoothAdapter;
+    private BluetoothDevice remoteDevice;
     private Switch bluetoothSwitch;
     private Button bluetoothScanningButton;
     protected static final int DISCOVERY_REQUEST = 1;
@@ -56,7 +61,7 @@ public class BluetoothActivity extends AppCompatActivity {
         bluetoothScanningButton = (Button) findViewById(R.id.bluetoothScanButton);
 
         //hide buttons on load
-        bluetoothScanningButton.setVisibility(View.GONE);
+        //bluetoothScanningButton.setVisibility(View.GONE);
 
         //turn on listeners
         onSwitchBluetoothState();
@@ -103,7 +108,7 @@ public class BluetoothActivity extends AppCompatActivity {
             String prevStateExtra = BluetoothAdapter.EXTRA_PREVIOUS_STATE;
             String stateExtra = BluetoothAdapter.EXTRA_STATE;
             int state = intent.getIntExtra(stateExtra, -1);
-            //int previousState = intent.getIntExtra(prevStateExtra, -1);
+            int previousState = intent.getIntExtra(prevStateExtra, -1);
             switch(state){
                 case(BluetoothAdapter.STATE_TURNING_ON) :
                 {
@@ -127,24 +132,23 @@ public class BluetoothActivity extends AppCompatActivity {
                     bluetoothScanningButton.setVisibility(View.GONE);
                     break;
                 }
-
             }
         }
     };
 
     //Check whether the bluetooth is on or off
     public boolean checkBluetoothState() {
-
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter.isEnabled()) {
             Toast.makeText(BluetoothActivity.this, "Bluetooth is on", Toast.LENGTH_SHORT).show();
             bluetoothSwitch.setChecked(true);
+            bluetoothScanningButton.setVisibility(View.VISIBLE);
             return true;
         } else {
             Toast.makeText(BluetoothActivity.this, "Bluetooth is off", Toast.LENGTH_SHORT).show();
+            bluetoothScanningButton.setVisibility(View.GONE);
             return false;
         }
-
     }
 
     //turn on bluetooth
@@ -155,12 +159,12 @@ public class BluetoothActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(bluetoothStateChanged);
         registerReceiver(bluetoothState, filter);
         startActivityForResult(new Intent(bluetoothRequestEnable), ENABLE_BLUETOOTH_REQUEST);
-
     }
 
     //turn off bluetooth
     public void turnOffBluetooth(){
         bluetoothAdapter.disable();
+
     }
 
     //scan bluetooth for devices
@@ -168,35 +172,79 @@ public class BluetoothActivity extends AppCompatActivity {
         String scanModeChanged = BluetoothAdapter.ACTION_SCAN_MODE_CHANGED;
         String beDiscoverable = BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE;
         IntentFilter filter = new IntentFilter(scanModeChanged);
-        //registerReceiver(bluetoothState, filter);
+        registerReceiver(bluetoothState, filter);
         startActivityForResult(new Intent(beDiscoverable), DISCOVERY_REQUEST);
 
     }
 
-    protected void  onActivityResult(int requestCode, int resultCode, Intent data){
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch (requestCode) {
             // if it was the request to enable Bluetooth:
             case (ENABLE_BLUETOOTH_REQUEST): {
+                Toast.makeText(BluetoothActivity.this, ENABLE_BLUETOOTH_REQUEST + " "+ resultCode, Toast.LENGTH_SHORT).show();
                 if (resultCode != Activity.RESULT_OK) {
                     Toast.makeText(BluetoothActivity.this, "Bluetooth Permission Denied", Toast.LENGTH_SHORT).show();
                     bluetoothSwitch.setChecked(false);
-                }
-                break;
+                }break;
             }
             case (DISCOVERY_REQUEST):{
-                if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(BluetoothActivity.this, DISCOVERY_REQUEST + " "+ resultCode, Toast.LENGTH_SHORT).show();
+                if (resultCode != Activity.RESULT_CANCELED) {
                     Toast.makeText(BluetoothActivity.this, "Discovery Permission Granted", Toast.LENGTH_SHORT).show();
+                    findDevices();
                 }
                 else {
                     Toast.makeText(BluetoothActivity.this, "Discovery Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
+                }break;
             }
         }//end of switch
-
     }//end of onActivityResult
 
+    private void findDevices(){
+        String lastUsedRemoteDevice = getLastUsedRemoteBTDevice();
+        if(lastUsedRemoteDevice != null){
+            String toastText="Checking for known paired devices, namely: "+lastUsedRemoteDevice;
+            Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
+            //see if this device is in a list of currently visible (?), paired devices
+            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+            for(BluetoothDevice pairedDevice : pairedDevices){
+                if(pairedDevice.getAddress().equals(lastUsedRemoteDevice)){
+                    toastText = "Found device: " + pairedDevice.getName() + "@" + lastUsedRemoteDevice;
+                    Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
+                    remoteDevice = pairedDevice;
+                }
+            }
+
+        }
+        if(remoteDevice== null){
+            String toastText = "Starting discovery for remote devices..";
+            Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
+            //start discovery
+            if(bluetoothAdapter.startDiscovery()){
+                toastText = "Discovery thread started ... Scanning for Devices";
+                Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
+                registerReceiver(discoveryResult, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+            }
+        }
+    }//end of findDevices
+
+    BroadcastReceiver discoveryResult = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent){
+            String remoteDeviceName = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
+            BluetoothDevice remoteDevice;
+            remoteDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            String toastText = "Discovered: " + remoteDeviceName;
+            Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
+            //statusUpdate.setText(statusText);
+        }
+    };
+
+    private String getLastUsedRemoteBTDevice(){
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        String result = prefs.getString("LAST_REMOTE_DEVICE_ADDRESS", null);
+        return result;
+    }
 
 }
 

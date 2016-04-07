@@ -108,6 +108,30 @@
         android:layout_alignLeft="@+id/channelUpButton"
         android:layout_alignStart="@+id/channelUpButton" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Source"
+        android:id="@+id/tvSourceButton"
+        android:layout_marginTop="85dp"
+        android:layout_below="@+id/channelDownButton"
+        android:layout_alignLeft="@+id/channelText"
+        android:layout_alignStart="@+id/channelText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tv Source"
+        android:id="@+id/textView"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:layout_alignBottom="@+id/tvSourceButton"
+        android:layout_alignRight="@+id/volumeDownButton"
+        android:layout_alignEnd="@+id/volumeDownButton"
+        android:layout_alignLeft="@+id/volumeDownButton"
+        android:layout_alignStart="@+id/volumeDownButton" />
+
 
 </RelativeLayout>
 
