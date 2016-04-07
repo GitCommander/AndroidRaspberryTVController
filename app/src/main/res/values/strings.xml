@@ -15,4 +15,5 @@
     <string name="bluetooth_on">Turn On/Off</string>
     <string name="scanButtonText">Scan</string>
     <string name="title_activity_voice_dictation">VoiceDictationActivity</string>
+    <string name="voice_dictation_instructions">"Tap here and \nspeak command..."</string>
 </resources>

@@ -5,18 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class VoiceDictationActivity extends AppCompatActivity {
-
-    private ImageButton microphoneButton;
+public class TVGuideActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voice_dictation);
+        setContentView(R.layout.activity_tvguide);
         setupUI();
     }
 
@@ -38,23 +35,6 @@ public class VoiceDictationActivity extends AppCompatActivity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        //register ui elements
-        microphoneButton = (ImageButton) findViewById(R.id.microphoneButton);
-
-        microphoneControls();
-
     }
-
-    public void microphoneControls() {
-        //volume up listener
-        View.OnClickListener oclMicrophoneBtn = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(VoiceDictationActivity.this, "Voice btn pressed", 10).show();
-            }
-        };
-        microphoneButton.setOnClickListener(oclMicrophoneBtn);
-    }
-
 
 }

@@ -10,4 +10,24 @@
     tools:context="com.example.keith.android_raspberrypitvcontroller.VoiceDictationActivity"
     android:id="@+id/voiceDictationLayout">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voice_dictation_instructions"
+        android:id="@+id/instructionsText"
+        android:layout_marginTop="43dp"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:id="@+id/microphoneButton"
+        android:background="@drawable/microphone"
+        android:longClickable="false"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/instructionsText"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

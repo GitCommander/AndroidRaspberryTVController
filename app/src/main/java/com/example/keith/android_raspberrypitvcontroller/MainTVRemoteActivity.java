@@ -59,6 +59,10 @@ public class MainTVRemoteActivity extends AppCompatActivity {
             Intent voiceIntent = new Intent(MainTVRemoteActivity.this, VoiceDictationActivity.class);
             startActivity(voiceIntent);
         }
+        if(item.getItemId() == R.id.tvGuideLayout) {
+            Intent tvGuideIntent = new Intent(MainTVRemoteActivity.this, TVGuideActivity.class);
+            startActivity(tvGuideIntent);
+        }
         return true;
     }
 

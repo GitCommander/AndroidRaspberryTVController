@@ -16,6 +16,7 @@
             android:label="TV Controller">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,6 +31,13 @@
         <activity
             android:name=".VoiceDictationActivity"
             android:label="Voice Dictation"
+            android:parentActivityName=".MainTVRemoteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainTVRemoteActivity" />
+        </activity>
+        <activity android:name=".TVGuideActivity"
+            android:label="TV Guide"
             android:parentActivityName=".MainTVRemoteActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
