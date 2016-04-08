@@ -36,7 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainTVRemoteActivity" />
         </activity>
-        <activity android:name=".TVGuideActivity"
+        <activity
+            android:name=".TVGuideActivity"
             android:label="TV Guide"
             android:parentActivityName=".MainTVRemoteActivity">
             <meta-data

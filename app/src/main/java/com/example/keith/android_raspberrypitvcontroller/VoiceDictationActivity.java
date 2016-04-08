@@ -50,7 +50,7 @@ public class VoiceDictationActivity extends AppCompatActivity {
         View.OnClickListener oclMicrophoneBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(VoiceDictationActivity.this, "Voice btn pressed", 10).show();
+                Toast.makeText(VoiceDictationActivity.this, "Microphone pressed", 10).show();
             }
         };
         microphoneButton.setOnClickListener(oclMicrophoneBtn);

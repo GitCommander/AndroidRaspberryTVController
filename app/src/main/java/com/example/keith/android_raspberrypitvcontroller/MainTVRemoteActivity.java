@@ -7,8 +7,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,8 @@ public class MainTVRemoteActivity extends AppCompatActivity {
     private Button channelUpButton;
     private Button channelDownButton;
     private Button tvSourceButton;
+    private ListView fDrawerList;
+    private ArrayAdapter<String> fAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         tvOnOffSwitch.setChecked(true);
 
         //volume and channel controls
+        addDrawerItems();
         volumeControls();
         channelControls();
         sourceControl();
@@ -55,19 +61,12 @@ public class MainTVRemoteActivity extends AppCompatActivity {
             Intent bluetoothIntent = new Intent(MainTVRemoteActivity.this, BluetoothActivity.class);
             startActivity(bluetoothIntent);
         }
-        if(item.getItemId() == R.id.voiceDictationLayout) {
-            Intent voiceIntent = new Intent(MainTVRemoteActivity.this, VoiceDictationActivity.class);
-            startActivity(voiceIntent);
-        }
-        if(item.getItemId() == R.id.tvGuideLayout) {
-            Intent tvGuideIntent = new Intent(MainTVRemoteActivity.this, TVGuideActivity.class);
-            startActivity(tvGuideIntent);
-        }
         return true;
     }
 
     public void setUpUI() {
         //register ui elements
+        fDrawerList = (ListView)findViewById(R.id.navList);
         switchStatus = (TextView) findViewById(R.id.switchStatus);
         tvOnOffSwitch = (Switch) findViewById(R.id.tvOnOffSwitch);
         volumeUpButton = (Button) findViewById(R.id.volumeUpButton);
@@ -75,6 +74,27 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         channelUpButton = (Button) findViewById(R.id.channelUpButton);
         channelDownButton = (Button) findViewById(R.id.channelDownButton);
         tvSourceButton = (Button) findViewById(R.id.tvSourceButton);
+
+    }
+
+    private void addDrawerItems() {
+        String[] featureArray = { "Voice Dictation", "TV Guide"};
+        fAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, featureArray);
+        fDrawerList.setAdapter(fAdapter);
+
+        fDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0) {
+                    Intent voiceIntent = new Intent(MainTVRemoteActivity.this, VoiceDictationActivity.class);
+                    startActivity(voiceIntent);
+                }
+                if(position == 1){
+                    Intent tvGuideIntent = new Intent(MainTVRemoteActivity.this, TVGuideActivity.class);
+                    startActivity(tvGuideIntent);
+                }
+            }
+        });
 
     }
 

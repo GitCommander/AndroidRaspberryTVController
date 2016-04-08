@@ -25,7 +25,7 @@ import java.util.Set;
 public class BluetoothActivity extends AppCompatActivity {
 
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothDevice remoteDevice;
+    private BluetoothDevice bluetoothDevice;
     private Switch bluetoothSwitch;
     private Button bluetoothScanningButton;
     protected static final int DISCOVERY_REQUEST = 1;
@@ -181,14 +181,12 @@ public class BluetoothActivity extends AppCompatActivity {
         switch (requestCode) {
             // if it was the request to enable Bluetooth:
             case (ENABLE_BLUETOOTH_REQUEST): {
-                Toast.makeText(BluetoothActivity.this, ENABLE_BLUETOOTH_REQUEST + " "+ resultCode, Toast.LENGTH_SHORT).show();
                 if (resultCode != Activity.RESULT_OK) {
                     Toast.makeText(BluetoothActivity.this, "Bluetooth Permission Denied", Toast.LENGTH_SHORT).show();
                     bluetoothSwitch.setChecked(false);
                 }break;
             }
             case (DISCOVERY_REQUEST):{
-                Toast.makeText(BluetoothActivity.this, DISCOVERY_REQUEST + " "+ resultCode, Toast.LENGTH_SHORT).show();
                 if (resultCode != Activity.RESULT_CANCELED) {
                     Toast.makeText(BluetoothActivity.this, "Discovery Permission Granted", Toast.LENGTH_SHORT).show();
                     findDevices();
@@ -211,12 +209,12 @@ public class BluetoothActivity extends AppCompatActivity {
                 if(pairedDevice.getAddress().equals(lastUsedRemoteDevice)){
                     toastText = "Found device: " + pairedDevice.getName() + "@" + lastUsedRemoteDevice;
                     Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
-                    remoteDevice = pairedDevice;
+                    bluetoothDevice = pairedDevice;
                 }
             }
 
         }
-        if(remoteDevice== null){
+        if(bluetoothDevice== null){
             String toastText = "Starting discovery for remote devices..";
             Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
             //start discovery
@@ -236,7 +234,6 @@ public class BluetoothActivity extends AppCompatActivity {
             remoteDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             String toastText = "Discovered: " + remoteDeviceName;
             Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
-            //statusUpdate.setText(statusText);
         }
     };
 

@@ -16,4 +16,10 @@
     <string name="scanButtonText">Scan</string>
     <string name="title_activity_voice_dictation">VoiceDictationActivity</string>
     <string name="voice_dictation_instructions">"Tap here and \nspeak command..."</string>
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

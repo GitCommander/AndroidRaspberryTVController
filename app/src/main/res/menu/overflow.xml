@@ -5,14 +5,5 @@
             android:orderInCategory="100"
             android:showAsAction="never"
         />
-        <item android:id="@+id/voiceDictationLayout"
-            android:title="Voice Dictation"
-            android:orderInCategory="100"
-            android:showAsAction="never"
-            />
-        <item android:id="@+id/tvGuideLayout"
-            android:title="TV Guide"
-            android:orderInCategory="100"
-            android:showAsAction="never"
-            />
+
 </menu>
