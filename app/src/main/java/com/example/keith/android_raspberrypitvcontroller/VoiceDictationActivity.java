@@ -46,7 +46,7 @@ public class VoiceDictationActivity extends AppCompatActivity {
     }
 
     public void microphoneControls() {
-        //volume up listener
+        //microphone listener
         View.OnClickListener oclMicrophoneBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

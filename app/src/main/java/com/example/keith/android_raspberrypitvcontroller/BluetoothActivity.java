@@ -60,9 +60,6 @@ public class BluetoothActivity extends AppCompatActivity {
         bluetoothSwitch = (Switch) findViewById(R.id.bluetoothSwitch);
         bluetoothScanningButton = (Button) findViewById(R.id.bluetoothScanButton);
 
-        //hide buttons on load
-        //bluetoothScanningButton.setVisibility(View.GONE);
-
         //turn on listeners
         onSwitchBluetoothState();
         onScanButton();
@@ -102,13 +99,14 @@ public class BluetoothActivity extends AppCompatActivity {
         bluetoothScanningButton.setOnClickListener(oclScanBtn);
     }
 
+    //broadcast receiver informs user of bluetooth state
     BroadcastReceiver bluetoothState = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String prevStateExtra = BluetoothAdapter.EXTRA_PREVIOUS_STATE;
             String stateExtra = BluetoothAdapter.EXTRA_STATE;
             int state = intent.getIntExtra(stateExtra, -1);
-            int previousState = intent.getIntExtra(prevStateExtra, -1);
+            //int previousState = intent.getIntExtra(prevStateExtra, -1);
             switch(state){
                 case(BluetoothAdapter.STATE_TURNING_ON) :
                 {
@@ -177,6 +175,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
     }
 
+    //function handles permission denials
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch (requestCode) {
             // if it was the request to enable Bluetooth:
@@ -198,12 +197,13 @@ public class BluetoothActivity extends AppCompatActivity {
         }//end of switch
     }//end of onActivityResult
 
+    //function to find devices, already paired or new
     private void findDevices(){
         String lastUsedRemoteDevice = getLastUsedRemoteBTDevice();
         if(lastUsedRemoteDevice != null){
             String toastText="Checking for known paired devices, namely: "+lastUsedRemoteDevice;
             Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
-            //see if this device is in a list of currently visible (?), paired devices
+            //see if this device is in a list of currently visible paired devices
             Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
             for(BluetoothDevice pairedDevice : pairedDevices){
                 if(pairedDevice.getAddress().equals(lastUsedRemoteDevice)){
