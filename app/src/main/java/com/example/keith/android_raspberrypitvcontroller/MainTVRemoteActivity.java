@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,9 @@ public class MainTVRemoteActivity extends AppCompatActivity {
     private Button tvSourceButton;
     private ListView fDrawerList;
     private ArrayAdapter<String> fAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice = null;
     BluetoothAdapter mBluetoothAdapter;
@@ -53,6 +58,13 @@ public class MainTVRemoteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        //sync nav menu icons
+        mDrawerToggle.syncState();
+    }
+
     //creates action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +79,10 @@ public class MainTVRemoteActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.bluetoothLayout) {
             Intent bluetoothIntent = new Intent(MainTVRemoteActivity.this, BluetoothActivity.class);
             startActivity(bluetoothIntent);
+        }
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
         return true;
     }
@@ -98,6 +114,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
 
     //navigation drawer
     private void addDrawerItems() {
+
         String[] featureArray = { "Voice Dictation", "TV Guide"};
         fAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, featureArray);
         fDrawerList.setAdapter(fAdapter);
@@ -115,6 +132,30 @@ public class MainTVRemoteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //actionbar hamburger toggle
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Other Features");
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+            }
+        };
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
     }
 
