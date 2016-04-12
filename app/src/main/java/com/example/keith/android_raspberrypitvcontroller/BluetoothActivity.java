@@ -215,8 +215,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
         }
         if(bluetoothDevice== null){
-            String toastText = "Starting discovery for remote devices..";
-            Toast.makeText(BluetoothActivity.this, toastText, Toast.LENGTH_SHORT).show();
+            String toastText;
             //start discovery
             if(bluetoothAdapter.startDiscovery()){
                 toastText = "Discovery thread started ... Scanning for Devices";

@@ -115,7 +115,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
     //navigation drawer
     private void addDrawerItems() {
 
-        String[] featureArray = { "Voice Dictation", "TV Guide"};
+        String[] featureArray = { "Voice Dictation", "TV Guide", "Programme Facts"};
         fAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, featureArray);
         fDrawerList.setAdapter(fAdapter);
 
@@ -129,6 +129,10 @@ public class MainTVRemoteActivity extends AppCompatActivity {
                 if(position == 1){
                     Intent tvGuideIntent = new Intent(MainTVRemoteActivity.this, TVGuideActivity.class);
                     startActivity(tvGuideIntent);
+                }
+                if(position == 2){
+                    Intent programmeFactsIntent = new Intent(MainTVRemoteActivity.this, ProgrammeFactsActivity.class);
+                    startActivity(programmeFactsIntent);
                 }
             }
         });
@@ -186,7 +190,7 @@ public class MainTVRemoteActivity extends AppCompatActivity {
                         {
 
                             byte[] packetBytes = new byte[bytesAvailable];
-                            Log.e("TV Remote bt","bytes available");
+                            Log.e("TV Remote received bt","bytes available");
                             byte[] readBuffer = new byte[1024];
                             mmInputStream.read(packetBytes);
 
